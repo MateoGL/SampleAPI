@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SampleAPI.Domain.Models;
 using SampleAPI.Infrastructure;
+using SampleAPI.Queries.Interfaces;
+using SampleAPI.ViewModels;
 
 namespace SampleAPI.Controllers
 {
@@ -16,16 +18,19 @@ namespace SampleAPI.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        private readonly IUserQueries _queries;
+
+        public UsersController(ApplicationDbContext context, IUserQueries queries)
         {
+            _queries = queries;
             _context = context;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _queries.GetAllUsers();
         }
 
         // GET: api/Users/5

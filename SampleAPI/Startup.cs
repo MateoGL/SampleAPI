@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SampleAPI.Infrastructure;
+using SampleAPI.Queries;
+using SampleAPI.Queries.Interfaces;
 
 namespace SampleAPI
 {
@@ -30,6 +32,9 @@ namespace SampleAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
             });
+
+            // Users
+            services.AddScoped<IUserQueries, UserQueries>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
